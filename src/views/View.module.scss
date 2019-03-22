@@ -1,0 +1,16 @@
+.View {
+
+  .body {
+    margin: 2vh;
+    height: 74vh;
+  }
+  .footer {
+    margin: 2vh;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    & > div {
+      margin-right: 2vh;
+    }
+  }
+}
