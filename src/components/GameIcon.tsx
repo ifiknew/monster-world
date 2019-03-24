@@ -1,22 +1,25 @@
 import * as React from 'react';
 import base from './svg/base'
-
-export interface IconProps extends React.SVGProps<SVGSVGElement> {
+import monster from './svg/monster'
+import skill from './svg/skill'
+export interface GameIconProps extends React.SVGProps<SVGSVGElement> {
   src: string,
   size?: 'smaller' | 'small' | 'default' | 'large' | 'larger'
 }
 const sizes = ['smaller', 'small', 'default', 'large', 'larger']
 const SvgMap = {
-  base
+  base,
+  monster,
+  skill
 }
 /**
  * @use simple factory
  */
-export default class Icon extends React.Component<IconProps, any> {
+export default class GameIcon extends React.Component<GameIconProps, any> {
 
   private getComponent = () => {
     const { src } = this.props
-    const [ folder, file ] = src.split('/')
+    const [ folder, file ] = src.replace(/ ([a-z])([^ ]*)/g, str => ` ${str[1].toUpperCase()}${str.substr(2)}`).split('/')
     let Component: React.SFC<React.SVGProps<SVGSVGElement>>
     try {
       Component = (SvgMap as any)[folder][file]
@@ -34,12 +37,13 @@ export default class Icon extends React.Component<IconProps, any> {
     const Component = this.getComponent()
     return (
       <Component 
-        style={{ 
-          width: `${sizes.indexOf(size) * 3 + 2}vh`,
-          display: 'inline-flex',
-          background: 'black',
-        }}
         {...otherProps}
+        style={{ 
+          width: `${sizes.indexOf(size) * 2 + 1}vh`,
+          display: 'inline-flex',
+          background: '#333',
+          ...(otherProps.style || {})
+        }}
       />
     );
   }

@@ -1,7 +1,8 @@
-import Skill from "./Skill";
-
+import Skill from "./SkillData";
+import Monster from "./MonsterData";
 const Database = {
-  Skill
+  Skill,
+  Monster
 }
 
 export default Database

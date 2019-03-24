@@ -1,5 +1,5 @@
 enum GameState {
-  Ready,
+  Initialization,
   On,
   End
 }

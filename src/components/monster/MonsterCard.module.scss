@@ -1,0 +1,61 @@
+
+.MonsterCard {
+  width: 20vh;
+}
+.header {
+  height: 8vh;
+  background: #333;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  .avatar {
+    background: #333;
+    margin: 0 1vh;
+  }
+  .info {
+    .name {
+      text-transform: capitalize;
+    }
+    .attrs {
+      display: flex;
+      font-size: 1.5vh;
+      div {
+        display: inline-block;
+      }
+      & > div {
+        & > div {
+          margin-right: 0.5vh;
+        }
+      }
+    }
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 1vh;
+  div {
+    display: inline-block;
+  }
+  & > div {
+    & > div:first-of-type {
+      text-transform: capitalize;
+      width: 7vh;
+    }
+    & > div:last-of-type {
+
+    }
+  }
+}
+
+.footer {
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5vh 1vh;
+  .skill {
+    border: 0.1vh solid #ffffffa3;
+  }
+}

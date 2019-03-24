@@ -1,0 +1,10 @@
+.SkillIndicator {
+  display: inline-block;
+  border-radius: 50%;
+  width: 3vh;
+  height: 3vh;
+  svg {
+    transform: scale(0.6);
+    transform-origin: center;
+  }
+}

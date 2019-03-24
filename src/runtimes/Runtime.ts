@@ -1,5 +1,5 @@
 enum RuntimeState {
-  Ready,
+  Initialization,
   On,
   Stop,
   End,
@@ -9,29 +9,53 @@ enum RuntimeState {
  * @use state machine
  */
 const NextStateMap = {
-  [RuntimeState.Ready]: [RuntimeState.On],
+  [RuntimeState.Initialization]: [RuntimeState.On],
   [RuntimeState.On]: [RuntimeState.Stop, RuntimeState.End, RuntimeState.Cancel],
   [RuntimeState.Stop]: [RuntimeState.On, RuntimeState.End, RuntimeState.Cancel],
   [RuntimeState.End]: [] as Array<RuntimeState>,
   [RuntimeState.Cancel]: [RuntimeState.End],
 }
 
+const FuncNameMap = {
+  [RuntimeState.Initialization]: 'None',
+  [RuntimeState.On]: 'Start',
+  [RuntimeState.Stop]: 'Stop',
+  [RuntimeState.End]: 'End',
+  [RuntimeState.Cancel]: 'Cancel'
+}
+
+const noop = () => {}
+
 /**
  * @use template function
  */
 abstract class Runtime {
-  private state = RuntimeState.Ready
+  private state = RuntimeState.Initialization
 
-  protected setState = (state: RuntimeState) => {
+  protected readonly setState = (state: RuntimeState) => {
     const isValidNextState = NextStateMap[this.state].includes(state)
     if (isValidNextState) {
+      const fnName = FuncNameMap[state]
+      const beforeFn = (this as any)[`before${fnName}`] || noop
+      const onFn = (this as any)[`on${fnName}`] || noop
+      beforeFn()
       this.state = state
+      onFn()
     } else {
       throw new Error('Invalid State Transfer')
     }
   }
 
+  protected readonly getState = () => this.state
   
+  protected beforeStart() {}
+  protected beforeStop() {}
+  protected beforeEnd() {}
+  protected beforeCancel() {}
+  protected onStart() {}
+  protected onStop() {}
+  protected onEnd() {}
+  protected onCancel() {}
 }
 
 export default Runtime

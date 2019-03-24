@@ -33,7 +33,7 @@ class ConnectedComponent<S> extends React.Component<ConnectedComponentProps<S>> 
 }
 
 declare interface withStoreWrapper<P> {
-  <S>(sotre: Store<S>) : (selector: any) => (component: P) => P
+  <S, T>(sotre: Store<S>) : (selector?: (s:S) => T) => (component: React.ComponentClass<P & T>) => React.ComponentClass<P>
 }
 
 const withStoreWrapper = (

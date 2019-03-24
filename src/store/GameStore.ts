@@ -1,12 +1,7 @@
 import Store from "./Store";
 import withStoreWrapper from "./withStoreWrapper";
+import GameView from "../enums/GameView";
 
-interface State {
-  teammates: Array<App.Monster>
-  battle: Battle
-  control: Control
-
-}
 
 interface Battle {
 
@@ -20,19 +15,29 @@ interface Control {
  * @use observer
  * @use single instance
  */
-class GameStore extends Store<State> {
+class GameStore extends Store<App.State> {
 
 }
 
 const store = new GameStore({
   teammates: [],
   battle: {},
-  control: {}
+  control: {
+    currentView: GameView.Adventure
+  }
 })
 
-declare interface withStore<P> {
-  (selector: any) : (component: P) => P
+const controlReducerMap: { [key: string]: (s: App.State, a: App.Action<string>) => App.State } = {
+  'changeView': (s,a) => ({ ...s, control: { currentView: a.data.currentView }})
+} 
+const reducerMap = {
+  ...controlReducerMap
 }
+store.setReducer((state, action) => {
+  const reducer = reducerMap[action.type]
+  return reducer ? reducer(state, action) : state
+})
+
 const withStore = withStoreWrapper(store) 
 
 export default GameStore
