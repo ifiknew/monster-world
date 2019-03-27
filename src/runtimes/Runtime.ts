@@ -38,9 +38,9 @@ abstract class Runtime {
       const fnName = FuncNameMap[state]
       const beforeFn = (this as any)[`before${fnName}`] || noop
       const onFn = (this as any)[`on${fnName}`] || noop
-      beforeFn()
+      beforeFn.call(this)
       this.state = state
-      onFn()
+      onFn.call(this)
     } else {
       throw new Error('Invalid State Transfer')
     }

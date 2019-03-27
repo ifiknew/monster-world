@@ -3,8 +3,9 @@ import { Card } from '@material-ui/core'
 import GameIcon from '../GameIcon';
 import styles from './MonsterCard.module.scss'
 import SkillIndicator from '../skill/SkillIndicator';
+import Monster from '../../models/Monster';
 export interface MonsterCardProps {
-  monster: App.Monster
+  monster: Monster
 }
 export default class MonsterCard extends React.Component<MonsterCardProps, any> {
   public render() {
@@ -25,15 +26,15 @@ export default class MonsterCard extends React.Component<MonsterCardProps, any> 
         <div className={styles.body}>
           <div>
             <div>health</div>
-            <div>1</div>
+            <div>{monster.currentHealth}</div>
           </div>
           <div>
             <div>mana</div>
-            <div>2</div>
+            <div>{monster.currentMana}</div>
           </div>
         </div>
         <div className={styles.footer}>
-          {monster.skills.map(v => <SkillIndicator key={v.id} skill={v} className={styles.skill}/>)}
+          {monster && monster.skills && monster.skills.map(v => <SkillIndicator key={v.id} skill={v} className={styles.skill}/>)}
         </div>
       </Card>
     );

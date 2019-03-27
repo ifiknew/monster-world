@@ -17,7 +17,7 @@ declare namespace App {
 
   interface State {
     teammates: Array<App.Monster>
-    battle: Battle
+    // battle: Battle
     control: Control
   }
 
@@ -38,7 +38,6 @@ declare namespace App {
   }
 
   interface MonsterData extends BaseData {
-
   }
 
   interface Monster extends Attributes, MonsterData {

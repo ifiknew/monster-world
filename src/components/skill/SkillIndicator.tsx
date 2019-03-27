@@ -1,8 +1,9 @@
 import * as React from 'react';
 import GameIcon from '../GameIcon';
 import styles from './SkillIndicator.module.scss'
+import Skill from '../../models/Skill';
 export interface SkillIndicatorProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  skill: App.Skill
+  skill: Skill
 }
 
 export default class SkillIndicator extends React.Component<SkillIndicatorProps, any> {

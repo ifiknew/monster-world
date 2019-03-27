@@ -3,8 +3,9 @@ import Side from "../enums/Side";
 import Range from "../enums/Range";
 import Monster from "./Monster";
 import Battle from "../runtimes/Battle";
+import ObservableCalculationBase from "./ObservableCalculationBase";
 
-class Skill extends CalculationBase {
+class Skill extends ObservableCalculationBase<Skill> {
 
   lastCastTime: number = 0
   target: App.TargetDescriptor
@@ -19,7 +20,6 @@ class Skill extends CalculationBase {
   }
 
   handleCast? : (monster: Monster, battle: Battle) => any
-
 
 }
 

@@ -15,20 +15,21 @@ interface Control {
  * @use observer
  * @use single instance
  */
-class GameStore extends Store<App.State> {
+class GameStore extends Store<App.State & { battle?: Battle, battleUpdateTime?: number }> {
 
 }
 
 const store = new GameStore({
   teammates: [],
-  battle: {},
   control: {
     currentView: GameView.Adventure
   }
 })
 
 const controlReducerMap: { [key: string]: (s: App.State, a: App.Action<string>) => App.State } = {
-  'changeView': (s,a) => ({ ...s, control: { currentView: a.data.currentView }})
+  'changeView': (s,a) => ({ ...s, control: { currentView: a.data.currentView }}),
+  'battle/start': (s,a) => ({ ...s, battle: a.data.battle }),
+  'battle/update': (s,a) => ({ ...s, battleUpdateTime: a.data.time })
 } 
 const reducerMap = {
   ...controlReducerMap

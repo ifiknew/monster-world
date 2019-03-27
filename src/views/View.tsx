@@ -62,4 +62,4 @@ class View extends React.Component<ViewProps & App.State, any> {
     );
   }
 }
-export default withStore(undefined)(View)
+export default withStore()(View)
