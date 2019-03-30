@@ -4,10 +4,22 @@
   display: flex;
   .left {
     height: 100%;
-    width: 70%;
+    width: 66%;
   }
   .right {
     height: 100%;
-    width: 30%;
+    width: 34%;
+    margin-right: 2rem;
+  }
+}
+.entryGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  .entry {
+    width: 7vh;
+    height: 7vh;
   }
 }

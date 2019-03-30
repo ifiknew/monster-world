@@ -5,7 +5,6 @@ import Class, { ClassConfig } from "../enums/Class";
 import Skill from "../models/Skill";
 import delay from "../utils/delay";
 import { store } from "../store/GameStore";
-import monster from "../components/svg/monster";
 
 const MAX_LENGTH = 6
 
@@ -17,6 +16,7 @@ class Battle extends Runtime {
 
   teammates: Array<Monster> = []
   enemies: Array<Monster> = []
+  positionMap: WeakMap<Monster, { id: number, side: Side }> = new Map()
 
   addMonster(monster: Monster, side: Side) {
     const targetList = side === Side.Teammate ? this.teammates : this.enemies
@@ -35,14 +35,30 @@ class Battle extends Runtime {
     [...this.teammates, ...this.enemies].forEach(v => {
       v.addAttributesChangeListener(this.onMonsterAttributesChange)
     })
+    this.teammates.forEach((v, i) => {
+      this.positionMap.set(v, { id: i, side: Side.Teammate })
+    })
+    this.enemies.forEach((v, i) => {
+      this.positionMap.set(v, { id: i, side: Side.Enemy })
+    })
   }
 
   protected onStart() {
     this.scheduleBattle()
   }
 
-  protected onEnd() {
-    console.log('end')
+  protected async onEnd() {
+    await delay(3000)
+    store.dispatch({
+      type: 'battle/end',
+      data: {
+        teammates: this.teammates,
+        enemies: this.enemies,
+        spirits: this.teammates.some(m => m.currentHealth > 0) ? 
+          this.enemies.map(v => v.rank || 0 + 1).reduce((a,b) => a+b) 
+        : 0
+      }
+    })
     ;
     [...this.teammates, ...this.enemies].forEach(v => {
       v.removeAttributesChangeListener(this.onMonsterAttributesChange)
@@ -70,6 +86,9 @@ class Battle extends Runtime {
       .sort((a,b) => (b.agility ||0) - (a.agility || 0))
       .forEach(monster => {
         monster.skills.forEach(async (skill) => {
+          const classConfig = ClassConfig[monster.class as Class]
+          const currentCooldown = BASE_AGI / classConfig.agility
+          skill.cooldown = currentCooldown
           skill.lastCastTime = battleStartTime
           while (true) {
             if (
@@ -78,14 +97,14 @@ class Battle extends Runtime {
             ) {
               return
             }
-            console.log('attack')
-            const classConfig = ClassConfig[monster.class as Class]
+            
             const currentTime = new Date().valueOf()
             const diffCastTime = currentTime - (skill.lastCastTime || 0)
-            const currentCooldown = BASE_AGI / classConfig.agility
+            
             const delayMS = Math.max(currentCooldown - diffCastTime, 0)
             await delay(delayMS)
             battle.castSkill(monster, skill)
+            skill.cooldown = currentCooldown
             skill.lastCastTime = delayMS + currentTime
           }
         })
@@ -117,8 +136,9 @@ class Battle extends Runtime {
       skill.handleCast(monster, this)
       return
     }
+    let targets = []
     if (skill.target.side === Side.Teammate) {
-      const targets = sameSideMonsters
+      targets = sameSideMonsters
         .filter(v => v.currentHealth > 0)
         .sort((a,b) => a.currentHealth - b.currentHealth)
         .slice(0, skill.target.count)
@@ -126,7 +146,7 @@ class Battle extends Runtime {
         target.currentHealth = Math.min(target.health || 0, target.currentHealth + skillValue)
       })
     } else {
-      const targets = otherSideMonsters
+      targets = otherSideMonsters
         .filter(v => v.currentHealth > 0)
         .sort(Math.random)
         .slice(0, skill.target.count)
@@ -137,6 +157,25 @@ class Battle extends Runtime {
         target.currentHealth = Math.max(0, target.currentHealth - skillValue)
       })
     }
+    if (targets.length > 0) {
+      store.dispatch({
+        type: 'battle/skill/cast',
+        data: {
+          monster,
+          skill,
+          skillValue,
+          targets,
+          positionMap: this.positionMap,
+          time: new Date().valueOf()
+        }
+      })
+    } else {
+      if (this.getState() === RuntimeState.On) {
+        this.setState(RuntimeState.End)
+      }
+      
+    }
+
   }
 
 }

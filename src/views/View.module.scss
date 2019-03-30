@@ -1,4 +1,4 @@
-$bodyHeight: 74vh;
+$bodyHeight: 82vh;
 
 .View {
 
@@ -7,7 +7,7 @@ $bodyHeight: 74vh;
     height: $bodyHeight;
 
     .transformGroup {
-      transition: transform .6s cubic-bezier(0, 0.84, 0.64, 1.12);
+      transition: transform .6s ease-in-out;
       position: relative;
       height: 100%;
       will-change: transform;
@@ -22,7 +22,7 @@ $bodyHeight: 74vh;
   .footer {
     padding: 2vh 3vh;
     padding-top: 0;
-    height: 20vh;
+    height: 12vh;
     display: flex;
     align-items: center;
     & > div {
@@ -34,5 +34,21 @@ $bodyHeight: 74vh;
     svg {
       transform: scale(0.8);
     }
+  }
+}
+
+.spiritWrapper {
+  background-color: #333 !important;
+  display: flex;
+  align-items: center;
+  svg {
+    transform: scale(0.8);
+  }
+  .text {
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 2vh;
+    color: #fff;
+    font-weight: 500;
   }
 }

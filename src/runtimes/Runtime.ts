@@ -34,6 +34,7 @@ abstract class Runtime {
 
   protected readonly setState = (state: RuntimeState) => {
     const isValidNextState = NextStateMap[this.state].includes(state)
+    console.log(state, this.state, isValidNextState)
     if (isValidNextState) {
       const fnName = FuncNameMap[state]
       const beforeFn = (this as any)[`before${fnName}`] || noop

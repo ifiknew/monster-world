@@ -28,6 +28,12 @@ abstract class Store<S> {
   public dispatch = (message: App.Action<any>) => {
     const currentState = this.state
     const nextState = this.reducer(this.state, message)
+
+    console.warn('Dispatch an Action:' + message.type)
+    console.log(message)
+    console.log(currentState)
+    console.log(nextState)
+    
     this.state = nextState
     this.subscribes.forEach(op => {
       if (op.selector == null) {

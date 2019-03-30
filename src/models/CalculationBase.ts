@@ -3,15 +3,16 @@ import Rank from "../enums/Rank";
 
 abstract class CalculationBase {
   id?: number
-  name?: string
+  name: string = ''
   avatar?: string
   rank?: Rank
   class?: Class
-  power?: number
-  agility?: number
-  intelligence?: number
-  health?: number
-  mana?: number
+  power: number = 0
+  agility: number = 0
+  intelligence: number = 0
+  health: number = 0
+  mana: number = 0
+  level: number = 1
 }
 
 export default CalculationBase

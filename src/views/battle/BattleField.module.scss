@@ -3,12 +3,12 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 .left,
 .right {
   height: 100%;
-  flex-flow: 1;
+  flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -18,10 +18,11 @@
   }
 }
 .left {
-  flex-direction: column-reverse;
-  align-content: flex-start;
+  flex-direction: column;
+  align-content: flex-end;
+  margin-right: 2rem;
 }
 .right {
   flex-direction: column;
-  align-content: flex-end;
+  align-content: flex-start;
 }

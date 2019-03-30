@@ -2,8 +2,9 @@ enum GameView {
   Team,
   Weapon,
   Armor,
+  Adventure,
   Skill,
-  Adventure
+  
 }
 
 export default GameView

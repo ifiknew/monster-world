@@ -2,6 +2,9 @@ import * as React from 'react';
 import base from './svg/base'
 import monster from './svg/monster'
 import skill from './svg/skill'
+import field from './svg/field'
+import weapon from './svg/weapon'
+import armor from './svg/armor'
 export interface GameIconProps extends React.SVGProps<SVGSVGElement> {
   src: string,
   size?: 'smaller' | 'small' | 'default' | 'large' | 'larger'
@@ -10,19 +13,22 @@ const sizes = ['smaller', 'small', 'default', 'large', 'larger']
 const SvgMap = {
   base,
   monster,
-  skill
+  skill,
+  field,
+  weapon,
+  armor
 }
 /**
  * @use simple factory
  */
-export default class GameIcon extends React.Component<GameIconProps, any> {
+export default class GameIcon extends React.PureComponent<GameIconProps, any> {
 
   private getComponent = () => {
     const { src } = this.props
     const [ folder, file ] = src.replace(/ ([a-z])([^ ]*)/g, str => ` ${str[1].toUpperCase()}${str.substr(2)}`).split('/')
     let Component: React.SFC<React.SVGProps<SVGSVGElement>>
     try {
-      Component = (SvgMap as any)[folder][file]
+      Component = (SvgMap as any)[folder][file.toLowerCase()]
     } catch (e) {
       throw new Error('Path not found:' + src)
     }

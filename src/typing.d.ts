@@ -16,7 +16,7 @@ declare namespace App {
   }
 
   interface State {
-    teammates: Array<App.Monster>
+    // teammates: Array<App.Monster>
     // battle: Battle
     control: Control
   }
@@ -36,6 +36,8 @@ declare namespace App {
     rank?: number
     class?: number
   }
+
+  interface Entity extends BaseData, Partial<Attributes> { }
 
   interface MonsterData extends BaseData {
   }
@@ -59,12 +61,14 @@ declare namespace App {
 
   }
 
+  interface EquipmentData extends BaseData, Partial<Attributes> {
+    type?: number
+  }
+
   interface Battle {
     teammates: Array<Monster>
     enemys: Array<Monster>
     state: number
   }
-
-
 
 }

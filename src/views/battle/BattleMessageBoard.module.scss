@@ -1,0 +1,23 @@
+.BattleMessageBoard {
+  height: 100%;
+  width: 100%;
+  overflow: auto !important;
+  padding: 2rem;
+  box-sizing: border-box;
+  & > div {
+    margin-bottom: 1rem;
+  }
+}
+.castSkill {
+  & > div {
+    margin-bottom: 0.5rem;
+  }
+}
+.battleEnd {
+  border-top: 1px solid #4a4a4a;
+  border-bottom: 1px solid #4a4a4a;
+  padding: 1rem;
+  & > div:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+  }
+}

@@ -27,8 +27,8 @@ class ConnectedComponent<S> extends React.Component<ConnectedComponentProps<S>> 
   render = () => {
     const { canRender, ...otherState } = this.state
     if (!canRender) { return null }
-    const { __component } = this.props
-    return React.createElement(__component as any, otherState)
+    const { __component, __store, __selector, ...otherProps } = this.props
+    return React.createElement(__component as any, {...otherState, ...otherProps })
   }
 }
 

@@ -8,32 +8,47 @@ import Database from '../../database/Database';
 import Class, { ClassConfig } from '../../enums/Class';
 import Side from '../../enums/Side';
 import { withStore, store } from '../../store/GameStore';
+import { Card } from '@material-ui/core';
+import GameIcon from '../../components/GameIcon';
 export interface BattleContainerProps {
-  battle?: Battle
+  battle?: Battle,
+  teammates?: Array<Monster>
 }
 
 class BattleContainer extends React.Component<BattleContainerProps, any> {
-  componentDidMount() {
+
+  initBattle = () => {
+    const { teammates = [] } = this.props
     const battle = new Battle()
+    teammates.forEach(v => {
+      v.currentHealth = v.health
+      battle.addMonster(v, Side.Teammate)
+    })
     const md = Database.Monster.find(v => v.id === 1)
     if (md) {
-      Array.from({length: 9}).map((_, i) => {
+      Array.from({length: teammates.length}).map((_, i) => {
         const tms = new Monster({ ...md, ...ClassConfig[md.class as Class]})
-        battle.addMonster(tms, i % 2 === 0 ? Side.Teammate : Side.Enemy)
+        battle.addMonster(tms, Side.Enemy)
       })
     }
     store.dispatch({ type: 'battle/start', data: { battle } })
     battle.start()
   }
+
   public render() {
     const { battle } = this.props
-    if (!battle) {
-      return null
-    }
     return (
       <div className={styles.BattleContainer}>
         <div className={styles.left}>
-          <BattleField battle={battle}/>
+          {battle ? 
+            <BattleField battle={battle}/>
+          :
+            <div className={styles.entryGroup}>
+              <Card elevation={4} className={styles.entry} onClick={this.initBattle}>
+                <GameIcon src='field/grass' size='large'/>
+              </Card>
+            </div>
+          }
         </div>
         <div className={styles.right}>
           <BattleMessageBoard />

@@ -2,14 +2,7 @@ import Rank from "../enums/Rank";
 import Class from "../enums/Class";
 import Side from "../enums/Side";
 import Range from "../enums/Range";
-interface BattleRuntimeConfig {
-  
-}
-interface BattleSkillConfig {
-  beforeCast?: () => Promise<boolean>
-  cast?: () => Promise<boolean>
-  onCast?: () => Promise<boolean>
-}
+
 const SkillData: Array<App.SkillData> = [
   {
     id: 0,

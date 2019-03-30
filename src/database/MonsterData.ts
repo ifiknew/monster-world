@@ -4,7 +4,7 @@ import Class from "../enums/Class";
 const MonsterData: Array<App.MonsterData> = [
   {
     id: 1,
-    name: 'goblin',
+    name: 'Goblin',
     class: Class.Warrior,
     rank: Rank.Weak
   },
