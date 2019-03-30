@@ -1,0 +1,67 @@
+.TeammateCard {
+  background-color: #333 !important;
+  color: #fff;
+  padding: .5vh;
+}
+.infoWrapper {
+  display: flex;
+  height: 9vh;
+  font-size: 2vh;
+  svg {
+    transform: scale(0.8);
+  }
+  .rows {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1vh 0;
+    margin-left: 2vh;
+    .attrGroup {
+      display: flex;
+      font-size: 1.5vh;
+      & > div {
+        margin-right: 2vh;
+        .label {
+          margin-right: 1vh;
+        }
+      }
+    }
+  }
+}
+.equipmentGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 1.5vh;
+  .equipmentWrapper {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 5vh;
+      height: 5vh;
+    }
+  }
+}
+
+.blockGroup {
+  display: flex;
+  align-items: center;
+
+  font-size: 1.5vh;
+  .label {
+    margin: 2vh;
+    width: 3vh;
+  }
+  .icon {
+    width: 5vh;
+    height: 5vh;
+    margin: .5vh 1vh;
+  }
+}
+.skillIcon {
+  svg > g {
+    transform: scale(0.8);
+    transform-origin: center;
+  }
+}

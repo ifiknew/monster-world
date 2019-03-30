@@ -17,20 +17,20 @@ export default class MonsterCard extends React.Component<MonsterCardProps, any> 
           <div className={styles.info}>
             <div className={styles.name}>{monster.name}</div>
             <div className={styles.attrs}>
-              <div><div>POW</div><div>{monster.power}</div></div>
-              <div><div>AGI</div><div>{monster.agility}</div></div>
-              <div><div>INT</div><div>{monster.intelligence}</div></div>
+              <div><div>POW</div><div>{monster.power.toFixed(1)}</div></div>
+              <div><div>AGI</div><div>{monster.agility.toFixed(1)}</div></div>
+              <div><div>INT</div><div>{monster.intelligence.toFixed(1)}</div></div>
             </div>
           </div>
         </div>
         <div className={styles.body}>
           <div>
             <div>health</div>
-            <div>{monster.currentHealth}</div>
+            <div>{monster.currentHealth.toFixed(1)}</div>
           </div>
           <div>
             <div>mana</div>
-            <div>{monster.currentMana}</div>
+            <div>{monster.currentMana.toFixed(1)}</div>
           </div>
         </div>
         <div className={styles.footer}>

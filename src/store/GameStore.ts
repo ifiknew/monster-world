@@ -45,6 +45,8 @@ interface GameStoreState extends App.State {
  * @use state
  * @use observer
  * @use single instance
+ * @use command
+ * @use strategy
  */
 class GameStore extends Store<GameStoreState> {
 
@@ -56,7 +58,7 @@ const store = new GameStore({
     ...ClassConfig[Database.Monster[0].class as Class]
   })],
   control: {
-    currentView: GameView.Adventure
+    currentView: GameView.Team
   },
   equipments: [],
   infos: [],
@@ -93,6 +95,18 @@ const controlReducerMap: { [key: string]: (s: GameStoreState, a: App.Action<stri
     return {
       ...s,
       equipments: [...s.equipments, a.data.equipment],
+      spirits: s.spirits - a.data.spirits
+    }
+  },
+  'monster/equip': (s, a) => {
+    return {
+      ...s,
+      equipments: s.equipments.filter(v => v != a.data.equipment)
+    }
+  },
+  'spirits/cost': (s, a) => {
+    return {
+      ...s,
       spirits: s.spirits - a.data.spirits
     }
   }

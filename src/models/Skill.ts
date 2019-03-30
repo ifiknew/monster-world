@@ -19,8 +19,9 @@ class Skill extends ObservableCalculationBase<Skill> {
     }
   }
 
+  beforeCast? : (monster: Monster, battle: Battle) => any
   handleCast? : (monster: Monster, battle: Battle) => any
-
+  afterCast? : (monster: Monster, battle: Battle) => any
 }
 
 export default Skill

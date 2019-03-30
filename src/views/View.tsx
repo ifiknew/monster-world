@@ -9,12 +9,13 @@ import StoreContainer from './store/StoreContainer';
 import Resource from '../enums/Resource';
 import Database from '../database/Database';
 import Equipment from '../models/Equipment';
+import TeamContainer from './team/TeamContainer';
 export interface ViewProps {
 }
 
 const views = [GameView.Team, GameView.Weapon, GameView.Armor, GameView.Adventure]
 const ViewConfig = {
-  [GameView.Team]: { icon: 'flag', component: () => <div /> },
+  [GameView.Team]: { icon: 'flag', component: TeamContainer },
   [GameView.Weapon]: { icon: 'weapon', component: () => <StoreContainer resourceType={Resource.Weapon} sellItems={Database.Weapon.map(v => new Equipment(v))} /> },
   [GameView.Armor]: { icon: 'armor', component: () => <StoreContainer resourceType={Resource.Armor} sellItems={Database.Armor.map(v => new Equipment(v))} /> },
   [GameView.Skill]: { icon: 'book', component: () => <div /> },

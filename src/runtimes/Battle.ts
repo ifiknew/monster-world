@@ -158,6 +158,9 @@ class Battle extends Runtime {
       })
     }
     if (targets.length > 0) {
+      if (skill.beforeCast) {
+        skill.beforeCast(monster, this)
+      }
       store.dispatch({
         type: 'battle/skill/cast',
         data: {
@@ -169,6 +172,9 @@ class Battle extends Runtime {
           time: new Date().valueOf()
         }
       })
+      if (skill.afterCast) {
+        skill.afterCast(monster, this)
+      }
     } else {
       if (this.getState() === RuntimeState.On) {
         this.setState(RuntimeState.End)
